@@ -177,6 +177,7 @@ components:
             - $ref: '#/components/schemas/AfSailorResult'
             - $ref: '#/components/schemas/DatasourceFilterResult'
             - $ref: '#/components/schemas/KnSearchResult'
+            - $ref: '#/components/schemas/WebProcessorResult'
         skill_info:
           $ref: "#/components/schemas/SkillInfo"
         interrupted:
@@ -214,6 +215,7 @@ components:
           oneOf:
             - $ref: "#/components/schemas/AfSailorBlockAnswer"
             - $ref: "#/components/schemas/DatasourceFilterBlockAnswer"
+            - $ref: "#/components/schemas/WebProcessorBlockAnswer"
         estimated_input_tokens:
           type: integer
           description: 预估输入 tokens 数
@@ -246,6 +248,7 @@ components:
           - $ref: "#/components/schemas/AfSailorResult"
           - $ref: "#/components/schemas/DatasourceFilterResult"
           - $ref: "#/components/schemas/KnSearchResult"
+          - $ref: "#/components/schemas/WebProcessorResult"
         think:
           type: string
           description: 执行步骤中的思考过程
@@ -514,6 +517,75 @@ components:
                 stdout:
                   type: string
                   description: 代码执行后转为自然语言的输出结果
+    
+    WebProcessorResult:
+      type: object
+      description: web_processor工具的返回结果
+      properties:
+        stdout:
+          type: string
+          description: 工具标准输出
+        stderr:
+          type: string
+          description: 工具标准错误输出
+        result:
+          $ref: "#/components/schemas/WebProcessorResultData"
+        metrics:
+          $ref: "#/components/schemas/ToolMetrics"
+    
+    WebProcessorResultData:
+      type: object
+      description: web_processor工具的结果数据
+      properties:
+        url:
+          type: string
+          description: 生成页面的 URL
+        size:
+          type: array
+          description: 页面尺寸，依次为宽和高
+          items:
+            type: integer
+    
+    WebProcessorBlockAnswer:
+      type: object
+      description: web_processor工具的block_answer数据
+      properties:
+        stdout:
+          type: string
+          description: 工具标准输出
+        stderr:
+          type: string
+          description: 工具标准错误输出
+        result:
+          $ref: "#/components/schemas/WebProcessorResultData"
+        metrics:
+          $ref: "#/components/schemas/ToolMetrics"
+
+    ToolMetrics:
+      type: object
+      description: 工具执行过程中的性能指标
+      properties:
+        io_read_bytes:
+          type: integer
+          nullable: true
+          description: 读取的字节数
+        io_write_bytes:
+          type: integer
+          nullable: true
+          description: 写入的字节数
+        duration_ms:
+          type: number
+          format: float
+          description: 执行耗时（毫秒）
+        cpu_time_ms:
+          type: number
+          format: float
+          description: CPU 时间（毫秒）
+        peak_memory_mb:
+          type: number
+          format: float
+          nullable: true
+          description: 峰值内存占用（MB）
     
     Text2SqlIntent:
       type: object

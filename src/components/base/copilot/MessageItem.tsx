@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { ChatMessage, RoleType, BlockType } from '../../../types'
-import { TextBlock, MarkdownBlock, WebSearchBlock, ToolBlock } from './blocks'
+import { TextBlock, MarkdownBlock, WebSearchBlock, ToolBlock, WebProcessorBlock } from './blocks'
 import { AssistantIcon, CopyIcon } from '../../icons'
 import { copyMessageContent } from '../../../utils/copyMessage'
 import RegenerateButton from './RegenerateButton'
@@ -116,6 +116,8 @@ const MessageItem: React.FC<MessageItemProps> = ({
                 return <MarkdownBlock key={index} block={block} />
               case BlockType.WEB_SEARCH:
                 return <WebSearchBlock key={index} block={block} />
+              case BlockType.WEB_PROCESSOR:
+                return <WebProcessorBlock key={index} block={block} />
               case BlockType.TOOL:
                 return <ToolBlock key={index} block={block} />
               default:

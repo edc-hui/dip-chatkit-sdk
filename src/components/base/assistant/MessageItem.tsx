@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { ChatMessage, RoleType, BlockType } from '../../../types'
-import { TextBlock, MarkdownBlock, WebSearchBlock, Json2PlotBlock, ToolBlock } from './blocks'
+import { TextBlock, MarkdownBlock, WebSearchBlock, Json2PlotBlock, ToolBlock, WebProcessorBlock } from './blocks'
 import Avatar from '@/components/Avatar'
 import { AssistantIcon, CopyIcon } from '../../icons'
 import { copyMessageContent } from '../../../utils/copyMessage'
@@ -132,8 +132,9 @@ const MessageItem: React.FC<MessageItemProps> = ({
               case BlockType.WEB_SEARCH:
                 return <WebSearchBlock key={index} block={block} />
               case BlockType.JSON2PLOT:
-                console.log(block)
                 return <Json2PlotBlock key={index} block={block} />
+              case BlockType.WEB_PROCESSOR:
+                return <WebProcessorBlock key={index} block={block} />
               case BlockType.TOOL:
                 return <ToolBlock key={index} block={block} />
               default:
